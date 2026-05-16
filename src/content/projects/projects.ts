@@ -106,7 +106,7 @@ export const PROJECTS: Project[] = [
     title: "CI/CD Pipeline",
     description:
       "GitHub Actions workflow that lints, builds, pushes a Docker image, and deploys to EC2 over SSH on every main-branch commit.",
-    imageUrl: img("1556075798-4825dfaaf498"),
+    imageUrl: "/cicd.png", // Sesuaikan dengan nama gambar Anda di folder public
     tags: ["GitHub Actions", "Docker", "EC2", "SSH"],
     category: "ci-cd",
     date: "2025-04-22",
