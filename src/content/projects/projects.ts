@@ -42,7 +42,7 @@ export const PROJECTS: Project[] = [
     title: "S3 Static Site + CDN",
     description:
       "Static site hosted on S3, distributed through CloudFront with HTTPS, custom domain, and cache invalidation on deploy.",
-    imageUrl: img("1451187580459-43490279c0fa"),
+    imageUrl: "/s3.png", // Sesuaikan dengan nama gambar Anda di folder public
     tags: ["AWS", "S3", "CloudFront", "Route 53"],
     category: "cloud",
     date: "2025-02-18",
