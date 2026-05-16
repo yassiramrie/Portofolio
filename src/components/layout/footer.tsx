@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
-import { Github, Linkedin, Whatsapp } from "@/components/ui/brand-icons";
+import { Mail, MessageCircle } from "lucide-react";
+import { Github, Linkedin } from "@/components/ui/brand-icons";
 import { SITE } from "@/lib/constants";
 
 export function Footer() {
@@ -36,7 +36,7 @@ export function Footer() {
             aria-label="Whatsapp"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
           >
-            <Whatsapp className="h-4 w-4" />
+            <MessageCircle className="h-4 w-4" />
           </Link>
           <Link
             href={`mailto:${SITE.email}`}
