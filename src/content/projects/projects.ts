@@ -1,8 +1,5 @@
 import type { Project } from "@/types";
 
-const img = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=90`;
-
 export const PROJECTS: Project[] = [
   {
     id: "vpc-architecture",
@@ -122,7 +119,7 @@ export const PROJECTS: Project[] = [
     title: "Monitoring Stack",
     description:
       "Prometheus scraping Node Exporter targets with Grafana dashboards for CPU, memory, disk, and network at a glance.",
-    imageUrl: img("1551288049-bebda4e38f71"),
+    imageUrl: "/monitoring.png", // Sesuaikan dengan nama gambar Anda di folder public
     tags: ["Prometheus", "Grafana", "Node Exporter", "Observability"],
     category: "monitoring",
     date: "2025-05-08",
