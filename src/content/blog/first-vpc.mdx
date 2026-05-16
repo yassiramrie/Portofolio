@@ -1,0 +1,68 @@
+---
+title: "Building My First VPC: What I Broke and What I Learned"
+date: "2025-03-15"
+category: "cloud"
+tags: ["AWS", "VPC", "Networking", "EC2"]
+summary: "Walking through my first custom VPC build — public and private subnets, a NAT gateway, and the routing mistakes that cost me two hours."
+---
+
+Networking was the part of AWS I dreaded most. Subnets, route tables, internet gateways — it all looked like alphabet soup until I sat down and actually built one.
+
+## The goal
+
+I wanted a VPC that looked like a real production setup:
+
+- A **public subnet** for a bastion host and load balancer
+- A **private subnet** for application servers with no direct internet exposure
+- A **NAT Gateway** so private instances can still reach the internet for updates
+
+Straightforward on paper. Less so at 11pm.
+
+## What I built (the short version)
+
+```
+10.0.0.0/16  — VPC CIDR
+
+10.0.1.0/24  — Public subnet  (us-east-1a)
+10.0.2.0/24  — Private subnet (us-east-1a)
+```
+
+- Internet Gateway attached to the VPC
+- Public route table: `0.0.0.0/0 → igw-xxxx`
+- Private route table: `0.0.0.0/0 → nat-xxxx`
+- NAT Gateway placed in the public subnet (this matters — I got it wrong the first time)
+
+## The mistake that cost me two hours
+
+I put the NAT Gateway in the **private subnet**. Traffic from private instances hit the NAT, which tried to route back out… through itself. Classic.
+
+The fix was simple once I understood *why*: NAT Gateways need public IPs, and public IPs only work in subnets that have a path to an Internet Gateway. Private subnets don't have that path — that's the whole point.
+
+**Rule I won't forget:** NAT Gateway always lives in a public subnet.
+
+## Security Groups vs NACLs
+
+I wasted another thirty minutes confusing these two. Quick mental model that helped:
+
+| | Security Groups | NACLs |
+|---|---|---|
+| Level | Instance | Subnet |
+| State | Stateful | Stateless |
+| Rules | Allow only | Allow + Deny |
+| Evaluation | All rules | In order, first match wins |
+
+For this project I stuck to Security Groups and left NACLs at defaults. Good enough for a learning build.
+
+## What I'd do differently
+
+1. **Draw the topology first.** Even a rough ASCII diagram forces you to think through the routing before you click anything.
+2. **Name everything immediately.** Unnamed resources in the console look identical after 20 minutes.
+3. **Test connectivity in layers.** Public instance first, then NAT, then private instance. Don't jump to the end.
+
+## Cost note
+
+The NAT Gateway ran up a few cents even when idle. Deleted it after I was done testing — NAT Gateway costs are per-hour plus per-GB data, so don't leave them running for a learning project.
+
+---
+
+Next up: putting an EC2 instance behind an Application Load Balancer in this same VPC.

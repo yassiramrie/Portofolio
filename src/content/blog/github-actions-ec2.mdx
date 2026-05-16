@@ -1,0 +1,146 @@
+---
+title: "CI/CD to EC2 With GitHub Actions: Zero to Deployed"
+date: "2025-07-20"
+category: "ci-cd"
+tags: ["GitHub Actions", "CI/CD", "EC2", "Docker", "AWS"]
+summary: "Building a GitHub Actions workflow that builds a Docker image, pushes it to ECR, and deploys it to an EC2 instance on every push to main."
+---
+
+I wanted one thing: push to `main`, and have the latest version running on my EC2 instance within minutes. No manual SSH, no running scripts locally.
+
+This is the workflow I ended up with.
+
+## The pipeline
+
+```
+push to main
+  → build Docker image
+  → push to Amazon ECR
+  → SSH into EC2
+  → pull latest image
+  → restart container
+```
+
+Three jobs, clear separation of concerns.
+
+## The workflow file
+
+```yaml
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: my-app
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.build.outputs.image }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image
+        id: build
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            aws ecr get-login-password --region us-east-1 | \
+              docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+            docker pull ${{ needs.build-and-push.outputs.image }}
+            docker stop app || true
+            docker rm app || true
+            docker run -d \
+              --name app \
+              --restart unless-stopped \
+              -p 80:3000 \
+              ${{ needs.build-and-push.outputs.image }}
+```
+
+## Secrets I had to set
+
+Under repository Settings → Secrets and variables → Actions:
+
+| Secret | What it is |
+|---|---|
+| `AWS_ACCESS_KEY_ID` | IAM access key (deploy-only permissions) |
+| `AWS_SECRET_ACCESS_KEY` | Matching secret key |
+| `EC2_HOST` | Public IP of the EC2 instance |
+| `EC2_SSH_KEY` | Private key for SSH (the `.pem` contents) |
+| `ECR_REGISTRY` | The ECR registry URL (account.dkr.ecr.region.amazonaws.com) |
+
+## IAM permissions: minimum viable
+
+The IAM user for CI only gets what it needs:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload",
+        "ecr:PutImage"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+Not `AdministratorAccess`. Not `AmazonEC2FullAccess`. Just ECR push permissions.
+
+## The `docker stop || true` pattern
+
+```bash
+docker stop app || true
+docker rm app || true
+```
+
+If no container named `app` is running, `docker stop` would fail and exit the script. `|| true` means "if this fails, keep going." Safe to run whether or not the container exists.
+
+## What I'd add next
+
+- **Health check before removing old container:** start new container, verify it's healthy, then stop the old one. Zero-downtime swap.
+- **Rollback:** if the new container fails its health check, pull the previous image and restart it.
+- **Slack notification:** post to a channel when deploy succeeds or fails.
+
+For now, this gets the job done. Every push to `main` is live in under 3 minutes.

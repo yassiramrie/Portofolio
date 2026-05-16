@@ -1,0 +1,124 @@
+---
+title: "Docker Compose for a Real Dev Stack: PostgreSQL, Redis, and an App"
+date: "2025-05-02"
+category: "containers"
+tags: ["Docker", "Docker Compose", "PostgreSQL", "Redis"]
+summary: "How I stopped managing services individually and started running my entire dev stack with a single command."
+---
+
+Before Docker Compose, my local dev setup was embarrassing. I'd forget which version of PostgreSQL I'd installed, lose track of which ports were in use, and start from scratch every time I switched projects.
+
+Compose fixed all of that.
+
+## The stack
+
+Three services, one file:
+
+```yaml
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  cache:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://appuser:secret@db:5432/appdb
+      REDIS_URL: redis://cache:6379
+    depends_on:
+      - db
+      - cache
+
+volumes:
+  pgdata:
+```
+
+`docker compose up` and everything's running. `docker compose down` and it's gone. No leftover processes.
+
+## The part I got wrong first: `depends_on`
+
+`depends_on` only waits for the container to start, not for the service inside to be ready. PostgreSQL takes a few seconds after the container starts before it accepts connections.
+
+My app was crashing on startup because it tried to connect while Postgres was still initializing.
+
+The fix is a health check:
+
+```yaml
+db:
+  image: postgres:16-alpine
+  healthcheck:
+    test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+    interval: 5s
+    timeout: 5s
+    retries: 5
+
+app:
+  depends_on:
+    db:
+      condition: service_healthy
+```
+
+Now the app waits until Postgres is actually ready before starting.
+
+## Named volumes vs bind mounts
+
+I use **named volumes** (like `pgdata` above) for database data. The data persists across `compose down` and is managed by Docker.
+
+I use **bind mounts** for source code in development:
+
+```yaml
+app:
+  volumes:
+    - ./src:/app/src  # live reload during dev
+```
+
+This way I get hot reload without rebuilding the image on every file change.
+
+## Multi-stage Dockerfile to keep things small
+
+The image I build in the `app` service uses a multi-stage build so production images don't ship with dev tooling:
+
+```dockerfile
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package*.json ./
+RUN npm ci --production
+CMD ["npm", "start"]
+```
+
+Builder layer: ~800 MB. Runner layer: ~200 MB. Worth the extra lines.
+
+## What this taught me about networking
+
+Containers in the same Compose file share a default network. The `app` service reaches Postgres at the hostname `db` (the service name) — not `localhost`.
+
+That tripped me up once: I hardcoded `localhost:5432` from a habit of local dev, then wondered why the app couldn't find the database.
+
+**Service name = hostname inside Compose.** Simple rule, easy to forget.
+
+---
+
+Next: pushing this image to ECR and pulling it down on an EC2 instance.

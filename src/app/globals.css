@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-background: #080808;
+  --color-foreground: #ffffff;
+  --color-card: #111111;
+  --color-card-foreground: #ffffff;
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #a0a0a0;
+
+  --color-primary: #4A7C59;
+  --color-primary-foreground: #ffffff;
+  --color-primary-light: #6BA37A;
+  --color-primary-dark: #2E5038;
+
+  --color-secondary: #1a1a1a;
+  --color-secondary-foreground: #ffffff;
+  --color-accent: #4A7C59;
+  --color-accent-foreground: #ffffff;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-input: rgba(255, 255, 255, 0.1);
+  --color-ring: #4A7C59;
+  --color-destructive: #ef4444;
+
+  --color-primary-glow: rgba(74, 124, 89, 0.3);
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  html,
+  body {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    @apply text-foreground antialiased;
+    background-color: #080808;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 38% 52%, rgba(255, 255, 255, 0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 58% 8%, rgba(255, 255, 255, 0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 78% 38%, rgba(255, 255, 255, 0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 68%, rgba(255, 255, 255, 0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 22% 82%, rgba(255, 255, 255, 0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 67% 88%, rgba(255, 255, 255, 0.28) 0%, transparent 100%),
+      radial-gradient(1px 1px at 47% 32%, rgba(255, 255, 255, 0.22) 0%, transparent 100%),
+      radial-gradient(1px 1px at 84% 14%, rgba(255, 255, 255, 0.38) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 62%, rgba(255, 255, 255, 0.28) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 70%, rgba(255, 255, 255, 0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 42%, rgba(255, 255, 255, 0.25) 0%, transparent 100%);
+    background-attachment: fixed;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+
+  code,
+  .font-mono,
+  [class*="mono"] {
+    font-family: var(--font-mono);
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+}
+
+@layer utilities {
+  .glow-primary {
+    box-shadow:
+      0 0 20px var(--color-primary-glow),
+      0 0 40px rgba(74, 124, 89, 0.15);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
