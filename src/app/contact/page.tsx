@@ -1,12 +1,12 @@
-import { Mail } from "lucide-react";
-import { Github, Linkedin, Twitter } from "@/components/ui/brand-icons";
+import { Mail, MessageCircle } from "lucide-react";
+import { Github, Linkedin } from "@/components/ui/brand-icons";
 import { SITE } from "@/lib/constants";
 
 const channels = [
   { icon: Mail, label: "Email", href: `mailto:${SITE.email}`, value: SITE.email },
   { icon: Github, label: "GitHub", href: SITE.social.github, value: SITE.social.github },
   { icon: Linkedin, label: "LinkedIn", href: SITE.social.linkedin, value: SITE.social.linkedin },
-  { icon: Twitter, label: "Twitter / X", href: SITE.social.twitter, value: SITE.social.twitter },
+  { icon: MessageCircle, label: "WhatsApp", href: SITE.social.whatsapp, value: SITE.social.whatsapp },
 ];
 
 export default function ContactPage() {
