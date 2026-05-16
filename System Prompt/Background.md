@@ -22,7 +22,6 @@ import {
   Environment,
   Html,
   Plane,
-  Sphere,
 } from "@react-three/drei"
 import { Download, Heart, X } from "lucide-react"
 
@@ -374,21 +373,10 @@ function CardGalaxy() {
 
   return (
     <>
-      <Sphere args={[2, 32, 32]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#1a1a2e" transparent opacity={0.15} wireframe />
-      </Sphere>
-      <Sphere args={[12, 32, 32]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#31b8c6" transparent opacity={0.05} wireframe />
-      </Sphere>
-      <Sphere args={[16, 32, 32]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#31b8c6" transparent opacity={0.03} wireframe />
-      </Sphere>
-      <Sphere args={[20, 32, 32]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#31b8c6" transparent opacity={0.02} wireframe />
-      </Sphere>
-
       {cards.map((card, i) => (
-        <FloatingCard key={card.id} card={card} position={cardPositions[i]} />
+        <Suspense fallback={null} key={card.id}>
+          <FloatingCard card={card} position={cardPositions[i]} />
+        </Suspense>
       ))}
     </>
   )
