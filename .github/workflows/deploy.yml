@@ -39,6 +39,9 @@ jobs:
               git clone $REPO_URL "$REPO_DIR"
             fi
 
+            # ── Free up disk space before build ───────────────────
+            sudo docker system prune -a -f --volumes || true
+
             # ── Build image on EC2 ────────────────────────────────
             sudo docker build -t portfolio:latest "$REPO_DIR"
 
