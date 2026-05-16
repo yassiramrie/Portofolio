@@ -90,7 +90,7 @@ export const PROJECTS: Project[] = [
     title: "Dockerized Microservices",
     description:
       "Multi-container application orchestrated with docker-compose, including a reverse proxy and shared internal network.",
-    imageUrl: img("1605379399642-870262d3d051"),
+    imageUrl: "/docker.png", // Sesuaikan dengan nama gambar Anda di folder public
     tags: ["Docker", "Compose", "NGINX", "Microservices"],
     category: "devops",
     date: "2025-04-07",
