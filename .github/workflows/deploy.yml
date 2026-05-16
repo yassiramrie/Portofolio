@@ -27,10 +27,14 @@ jobs:
 
             # ── Pull latest code ──────────────────────────────────
             REPO_DIR="$HOME/portfolio"
+            
+            # Menyisipkan token akses otomatis agar bisa clone/pull repo private
+            REPO_URL="https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/yassir420/Portofolio.git"
+            
             if [ -d "$REPO_DIR/.git" ]; then
-              git -C "$REPO_DIR" pull origin main 
+              git -C "$REPO_DIR" pull $REPO_URL main 
             else
-              git clone https://github.com/yassir420/Portofolio.git "$REPO_DIR"
+              git clone $REPO_URL "$REPO_DIR"
             fi
 
             # ── Build image on EC2 ────────────────────────────────
