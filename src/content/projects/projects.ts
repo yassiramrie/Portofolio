@@ -26,7 +26,7 @@ export const PROJECTS: Project[] = [
     title: "Auto-Scaling Web App",
     description:
       "EC2 Auto Scaling Group fronted by an Application Load Balancer with health checks and rolling launch template updates.",
-    imageUrl: img("1591808216268-ce0b82787efe"),
+    imageUrl: "/auto-scaling.png", // Sesuaikan dengan nama gambar Anda di folder public
     tags: ["AWS", "EC2", "ASG", "ALB"],
     category: "cloud",
     date: "2025-02-04",
