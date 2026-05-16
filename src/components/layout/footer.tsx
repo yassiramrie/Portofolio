@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Mail } from "lucide-react";
-import { Github, Linkedin, Twitter } from "@/components/ui/brand-icons";
+import { Github, Linkedin, Whatsapp } from "@/components/ui/brand-icons";
 import { SITE } from "@/lib/constants";
 
 export function Footer() {
@@ -30,13 +30,13 @@ export function Footer() {
             <Linkedin className="h-4 w-4" />
           </Link>
           <Link
-            href={SITE.social.twitter}
+            href={SITE.social.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Twitter / X"
+            aria-label="Whatsapp"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
           >
-            <Twitter className="h-4 w-4" />
+            <Whatsapp className="h-4 w-4" />
           </Link>
           <Link
             href={`mailto:${SITE.email}`}
