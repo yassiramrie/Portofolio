@@ -2,7 +2,7 @@ import { Timeline } from "@/components/sections/timeline";
 
 export const metadata = {
   title: "About",
-  description: "Career switch into Cloud / DevOps, told as a timeline of what was actually built.",
+  description: "Career switch from Quranic & Exegesis Studies into Cloud / DevOps, told as a timeline.",
 };
 
 export default function AboutPage() {
@@ -15,10 +15,7 @@ export default function AboutPage() {
         Career switch, told as a timeline.
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground">
-        I'm moving into Cloud and DevOps from a different field. Instead of
-        claiming mastery, I'm writing down what I built each quarter — the
-        services I configured, the things I broke, the dashboards I wired up.
-        This page is that log.
+        At 29, I am making a career switch into Cloud and DevOps from an entirely different field. My background is in Quranic &amp; Exegesis Studies (B.A.), where philosophy served as my primary methodology—constantly exploring how every new conception of the world shapes a &quot;spatial order&quot; for various representations of reality. Today, I apply that philosophy to designing and structuring technology infrastructure. Instead of claiming mastery, I am logging what I build each quarter—the services I configure, the things I break, the dashboards I wire up. This page is that log.
       </p>
 
       <section className="mt-16">
