@@ -74,7 +74,7 @@ export const PROJECTS: Project[] = [
     title: "Serverless API",
     description:
       "Lambda functions behind API Gateway with DynamoDB persistence and per-route IAM policies for least privilege.",
-    imageUrl: img("1518770660439-4636190af475"),
+    imageUrl: "/serverless.png", // Sesuaikan dengan nama gambar Anda di folder public
     tags: ["AWS", "Lambda", "API Gateway", "DynamoDB"],
     category: "cloud",
     date: "2025-03-19",
