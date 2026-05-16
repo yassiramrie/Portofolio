@@ -1,3 +1,13 @@
+export const SITE = {
+  // TODO: replace with real values before deploying
+  name: "yassir.dev",
+  role: "Cloud / DevOps Engineer in Training",
+  description:
+    "A public learning log for the move into Cloud and DevOps: AWS foundations, containerized delivery, CI/CD habits, and monitoring that makes systems explain themselves.",
+  url: "https://example.com",
+  email: "your.email@example.com",
+  social: {
+    github: "https://github.com/your-handle",
     linkedin: "https://www.linkedin.com/in/yassir-amrie-nasrullah/",
     twitter: "https://x.com/your-handle",
   },
