@@ -7,9 +7,9 @@ export const SITE = {
   url: "https://example.com",
   email: "yassiramrie97@gmail.com",
   social: {
-    github: "https://github.com/your-handle",
+    github: "https://github.com/yassir420",
     linkedin: "https://www.linkedin.com/in/yassir-amrie-nasrullah/",
-    twitter: "https://x.com/your-handle",
+    whatsapp: "https://wa.me/6281779487387", // Ganti dengan nomor WhatsApp Anda
   },
 } as const;
 
