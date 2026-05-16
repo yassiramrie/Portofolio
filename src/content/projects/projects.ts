@@ -10,7 +10,7 @@ export const PROJECTS: Project[] = [
     title: "VPC Architecture",
     description:
       "Custom AWS VPC with public and private subnets, NAT Gateway, route tables, and a bastion host for safe private-subnet access.",
-    imageUrl: img("1558494949-ef010cbdcc31"),
+    imageUrl: "/vpc.png",
     tags: ["AWS", "VPC", "Networking", "Bastion"],
     category: "cloud",
     date: "2025-01-12",
