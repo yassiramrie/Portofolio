@@ -5,7 +5,7 @@ export const SITE = {
   description:
     "A public learning log for the move into Cloud and DevOps: AWS foundations, containerized delivery, CI/CD habits, and monitoring that makes systems explain themselves.",
   url: "https://example.com",
-  email: "your.email@example.com",
+  email: "yassiramrie97@gmail.com",
   social: {
     github: "https://github.com/your-handle",
     linkedin: "https://www.linkedin.com/in/yassir-amrie-nasrullah/",
