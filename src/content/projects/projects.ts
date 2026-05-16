@@ -58,7 +58,7 @@ export const PROJECTS: Project[] = [
     title: "RDS Database Setup",
     description:
       "PostgreSQL on RDS with private-subnet placement, parameter groups, automated backups, and least-privilege application users.",
-    imageUrl: img("1544383835-bda2bc66a55d"),
+    imageUrl: "/rds.png", // Sesuaikan dengan nama gambar Anda di folder public
     tags: ["AWS", "RDS", "PostgreSQL", "Backups"],
     category: "cloud",
     date: "2025-03-02",
