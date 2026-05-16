@@ -41,6 +41,7 @@ jobs:
 
             # ── Free up disk space before build ───────────────────
             sudo docker system prune -a -f --volumes || true
+            sudo docker builder prune -a -f || true
 
             # ── Build image on EC2 ────────────────────────────────
             sudo docker build -t portfolio:latest "$REPO_DIR"
