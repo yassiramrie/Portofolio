@@ -36,8 +36,8 @@ export const TIMELINE: TimelineEntry[] = [
     body: "Prometheus scraping Node Exporter, Grafana dashboards, alerts on saturation. Machines started explaining themselves.",
   },
   {
-    date: "2025 · Q4",
-    title: "Portfolio launch",
+    date: "2026 · Q2",
+    title: "Portofolio launch",
     body: "Shipped this site. Each project on the home gallery is something I actually built — not a list of tools I've heard of.",
   },
 ];
