@@ -99,6 +99,26 @@
   }
 }
 
+/* Hero overlay: bottom-to-top gradient on mobile, left-to-right on md+ */
+.hero-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(8, 8, 8, 0.97) 0%,
+    rgba(8, 8, 8, 0.85) 55%,
+    rgba(8, 8, 8, 0.4) 80%,
+    transparent 100%
+  );
+}
+@media (min-width: 768px) {
+  .hero-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(8, 8, 8, 0.85) 60%,
+      transparent 100%
+    );
+  }
+}
+
 @layer utilities {
   .glow-primary {
     box-shadow:

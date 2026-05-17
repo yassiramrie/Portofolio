@@ -35,7 +35,7 @@ export function CardModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       style={{
         background: "rgba(0, 0, 0, 0.75)",
         backdropFilter: "blur(4px)",
@@ -44,19 +44,20 @@ export function CardModal() {
       }}
       onClick={handleBackdropClick}
     >
-      <div className="relative max-w-lg w-full">
+      {/* Close button — inside on mobile, outside on sm+ */}
+      <div className="relative w-full sm:max-w-lg">
         <button
           onClick={handleClose}
-          className="absolute -top-12 right-0 text-white hover:text-[#6BA37A] transition-colors z-10"
+          className="absolute right-3 top-3 z-20 sm:-top-12 sm:right-0 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white hover:text-[#6BA37A] hover:bg-white/20 transition-colors sm:bg-transparent sm:rounded-none"
           aria-label="Close"
         >
-          <X className="w-8 h-8" />
+          <X className="w-5 h-5 sm:w-8 sm:h-8" />
         </button>
 
         <div style={{ perspective: "1000px" }}>
           <div
             ref={cardRef}
-            className="relative cursor-pointer rounded-2xl bg-[#111111] p-5 transition-all duration-500 ease-out"
+            className="relative cursor-pointer rounded-t-2xl sm:rounded-2xl bg-[#111111] p-5 transition-all duration-500 ease-out max-h-[90svh] overflow-y-auto"
             style={{
               transformStyle: "preserve-3d",
               boxShadow:
@@ -66,6 +67,9 @@ export function CardModal() {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
+            {/* drag handle bar for mobile */}
+            <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/20 sm:hidden" />
+
             <div
               className="relative w-full mb-4 rounded-xl overflow-hidden"
               style={{ aspectRatio: "16 / 9" }}
@@ -89,7 +93,7 @@ export function CardModal() {
               </span>
             </div>
 
-            <h3 className="text-white text-xl font-semibold mb-2">
+            <h3 className="text-white text-lg sm:text-xl font-semibold mb-2">
               {selectedProject.title}
             </h3>
             <p className="text-sm text-white/70 leading-relaxed mb-4">
@@ -122,7 +126,7 @@ export function CardModal() {
                   href={selectedProject.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 text-sm font-medium text-white transition hover:bg-white/10"
+                  className="inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 text-sm font-medium text-white transition hover:bg-white/10"
                 >
                   <Github className="h-4 w-4" />
                   Code
@@ -130,7 +134,7 @@ export function CardModal() {
               ) : null}
               <a
                 href={`/projects/${selectedProject.slug}`}
-                className="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#4A7C59] text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98]"
+                className="inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#4A7C59] text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.98]"
               >
                 <ExternalLink className="h-4 w-4" strokeWidth={2} />
                 View details
