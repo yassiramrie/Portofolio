@@ -226,6 +226,7 @@ export default function StellarCardGallery() {
         gl={{ antialias: true, powerPreference: "high-performance" }}
         dpr={[1, 2]}
         onCreated={({ gl }) => {
+          gl.domElement.style.setProperty("touch-action", "pan-y", "important");
           gl.domElement.style.pointerEvents = "auto";
           if (typeof window !== "undefined") {
             gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -240,8 +241,8 @@ export default function StellarCardGallery() {
           <pointLight position={[-10, -10, -10]} intensity={0.3} />
           <CardGalaxy />
           <OrbitControls
-            enablePan={false}
-            enableZoom={false}
+            enablePan={true}
+            enableZoom={true}
             enableRotate
             autoRotate
             autoRotateSpeed={0.5}
