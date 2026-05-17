@@ -87,8 +87,8 @@ export function DevOpsExtras() {
               <ShieldAlert className="mx-auto mb-4 h-16 w-16 text-yellow-500" />
               <h3 className="mb-2 text-2xl font-bold text-white">Servers are going down!</h3>
               <p className="mb-8 text-neutral-400">
-                Kamu sedang piket. Klik server yang berwarna merah untuk me-restart-nya. <br/>
-                <span className="text-red-400 font-semibold mt-2 block">Hati-hati: Asal klik server normal akan mengurangi 2 poin!</span>
+                You are on-call. Click the red servers to restart them. <br/>
+                <span className="text-red-400 font-semibold mt-2 block">Careful: Clicking a healthy server costs 2 points!</span>
               </p>
               <button onClick={startGame} className="inline-flex items-center gap-2 rounded-lg bg-[#4A7C59] px-6 py-3 font-mono font-bold text-white transition hover:bg-[#4A7C59]/80 cursor-pointer">
                 <Play className="h-5 w-5" /> Start Shift
@@ -122,7 +122,7 @@ export function DevOpsExtras() {
             <div className="py-10">
               <Terminal className="mx-auto mb-4 h-16 w-16 text-[#6BA37A]" />
               <h3 className="mb-2 text-2xl font-bold text-white">Shift Ended!</h3>
-              <p className="mb-8 text-neutral-400">Kamu berhasil memperbaiki <span className="font-bold text-[#6BA37A] text-xl">{score}</span> server selama piket.</p>
+              <p className="mb-8 text-neutral-400">You successfully fixed <span className="font-bold text-[#6BA37A] text-xl">{score}</span> servers during your shift.</p>
               <button onClick={startGame} className="inline-flex items-center gap-2 rounded-lg bg-[#4A7C59] px-6 py-3 font-mono font-bold text-white transition hover:bg-[#4A7C59]/80 cursor-pointer">
                 <RotateCcw className="h-5 w-5" /> Play Again
               </button>
