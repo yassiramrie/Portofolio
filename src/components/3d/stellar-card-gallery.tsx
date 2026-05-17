@@ -240,14 +240,14 @@ export default function StellarCardGallery() {
           <pointLight position={[-10, -10, -10]} intensity={0.3} />
           <CardGalaxy />
           <OrbitControls
-            enablePan
-            enableZoom
+            enablePan={false}
+            enableZoom={false}
             enableRotate
+            autoRotate
+            autoRotateSpeed={0.5}
             minDistance={5}
             maxDistance={30}
             rotateSpeed={0.5}
-            zoomSpeed={1.2}
-            panSpeed={0.8}
             target={[0, 0, 0]}
           />
         </Suspense>
