@@ -4,6 +4,7 @@ import { CardProvider } from "@/components/3d/card-context";
 import { CardModal } from "@/components/3d/card-modal";
 import { HeroSection } from "@/components/sections/hero-section";
 import { PROJECTS } from "@/content/projects/projects";
+import { DevOpsExtras } from "@/components/sections/devops-extras";
 
 const highlights = [
   {
@@ -34,6 +35,8 @@ export default function HomePage() {
   return (
     <CardProvider>
       <HeroSection />
+
+      <DevOpsExtras />
 
       <section
         className="relative z-10 px-5 py-20 sm:px-8 lg:py-28"
