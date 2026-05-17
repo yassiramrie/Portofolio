@@ -28,14 +28,23 @@ export function DevOpsExtras() {
   useEffect(() => {
     if (gameState !== "playing") return;
     
-    // Semakin tinggi skor, semakin cepat servernya mati (Tingkat kesulitan naik)
-    const difficultySpeed = Math.max(400, 1000 - score * 20);
+    // Semakin tinggi skor, semakin cepat servernya mati (Tingkat kesulitan naik drastis)
+    // Mulai dari 800ms, turun 30ms setiap poin, minimum 250ms (sangat cepat)
+    const difficultySpeed = Math.max(250, 800 - score * 30);
     
     const interval = setInterval(() => {
       setDownServers((prev) => {
         const newSet = new Set(prev);
-        const randomServer = Math.floor(Math.random() * 9); // Ada 9 server (0-8)
-        newSet.add(randomServer);
+        
+        // Server pertama mati
+        newSet.add(Math.floor(Math.random() * 9));
+        
+        // Jika skor > 15, ada peluang 50% mati 2 server sekaligus
+        if (score > 15 && Math.random() > 0.5) newSet.add(Math.floor(Math.random() * 9));
+        
+        // Jika skor > 30, pasti nambah 1 lagi yang mati (total bisa 2-3 mati sekaligus)
+        if (score > 30) newSet.add(Math.floor(Math.random() * 9));
+
         return newSet;
       });
     }, difficultySpeed);
@@ -59,6 +68,9 @@ export function DevOpsExtras() {
         newSet.delete(index);
         return newSet;
       });
+    } else {
+      // Penalti: Ngeklik server yang tidak mati akan mengurangi 2 poin!
+      setScore((s) => Math.max(0, s - 2));
     }
   };
 
@@ -74,7 +86,10 @@ export function DevOpsExtras() {
             <div className="py-10">
               <ShieldAlert className="mx-auto mb-4 h-16 w-16 text-yellow-500" />
               <h3 className="mb-2 text-2xl font-bold text-white">Servers are going down!</h3>
-              <p className="mb-8 text-neutral-400">Kamu sedang piket. Klik server yang berwarna merah untuk me-restart-nya sebelum waktu habis.</p>
+              <p className="mb-8 text-neutral-400">
+                Kamu sedang piket. Klik server yang berwarna merah untuk me-restart-nya. <br/>
+                <span className="text-red-400 font-semibold mt-2 block">Hati-hati: Asal klik server normal akan mengurangi 2 poin!</span>
+              </p>
               <button onClick={startGame} className="inline-flex items-center gap-2 rounded-lg bg-[#4A7C59] px-6 py-3 font-mono font-bold text-white transition hover:bg-[#4A7C59]/80 cursor-pointer">
                 <Play className="h-5 w-5" /> Start Shift
               </button>
