@@ -174,8 +174,8 @@ function FloatingCard({
 
 function IntroAnim() {
   useFrame((state) => {
-    // Menganimasikan kamera secara mulus dari posisi jauh (z=40) ke target (z=24) agar tidak terlalu dekat
-    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, 24, 0.03);
+    // Mempercepat animasi zoom awal (0.08) agar model langsung terlihat jelas saat diakses
+    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, 24, 0.08);
   });
   return null;
 }
@@ -226,11 +226,12 @@ export default function StellarCardGallery() {
         height: "100%",
         zIndex: 1,
         overflow: "hidden",
+        touchAction: "pan-y",
       }}
     >
       <Canvas
         camera={{ position: [0, 0, 40], fov: 55 }}
-        style={{ width: "100%", height: "100%", display: "block" }}
+        style={{ width: "100%", height: "100%", display: "block", touchAction: "pan-y" }}
         gl={{ antialias: true, powerPreference: "high-performance" }}
         dpr={[1, 2]}
         onCreated={({ gl }) => {
@@ -254,7 +255,7 @@ export default function StellarCardGallery() {
           enableZoom={false}
           enableRotate
           autoRotate
-          autoRotateSpeed={0.5}
+          autoRotateSpeed={1.8}
           minDistance={5}
           maxDistance={40}
           rotateSpeed={0.5}
