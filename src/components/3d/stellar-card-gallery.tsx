@@ -8,6 +8,11 @@ import type { Project } from "@/types";
 import { PROJECTS } from "@/content/projects/projects";
 import { useCardContext } from "./card-context";
 
+// Preload semua gambar project sesegera mungkin agar tidak telat muncul di model 3D
+PROJECTS.forEach((project) => {
+  useTexture.preload(project.imageUrl);
+});
+
 type CardPosition = {
   x: number;
   y: number;
@@ -169,8 +174,8 @@ function FloatingCard({
 
 function IntroAnim() {
   useFrame((state) => {
-    // Menganimasikan kamera secara mulus dari posisi jauh (z=40) ke target (z=14)
-    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, 14, 0.03);
+    // Menganimasikan kamera secara mulus dari posisi jauh (z=40) ke target (z=24) agar tidak terlalu dekat
+    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, 24, 0.03);
   });
   return null;
 }
