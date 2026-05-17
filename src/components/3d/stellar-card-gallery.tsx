@@ -62,9 +62,8 @@ function FloatingCard({
   const isThisCardActive = selectedProject?.id === project.id;
   const shouldFade = isModalOpen && !isThisCardActive;
   const fadeOpacity = shouldFade ? 0.08 : 1;
+  const borderMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
 
-  useFrame(({ camera }) => {
-    groupRef.current?.lookAt(camera.position);
   // Offset acak agar setiap kartu melayang dengan ritme yang berbeda
   const randomOffset = useMemo(() => Math.random() * Math.PI * 2, []);
 
@@ -73,6 +72,20 @@ function FloatingCard({
       groupRef.current.lookAt(camera.position);
       // Efek melayang naik turun (bobbing)
       groupRef.current.position.y = position.y + Math.sin(clock.getElapsedTime() * 1.5 + randomOffset) * 0.4;
+    }
+
+    // Efek warna cahaya pinggiran kartu yang berubah-ubah seiring waktu
+    if (borderMaterialRef.current) {
+      if (!hovered && !shouldFade) {
+        // Mengubah warna Hue dari 0.0 hingga 1.0 (seperti pelangi / RGB)
+        // Offset acak memastikan setiap kartu memiliki warna yang berbeda pada saat yang sama
+        const hue = (clock.getElapsedTime() * 0.15 + randomOffset) % 1;
+        borderMaterialRef.current.color.setHSL(hue, 0.7, 0.5);
+      } else if (hovered) {
+        borderMaterialRef.current.color.setHex(0x4a7c59); // Kembali ke warna aksen (hijau) saat dursor berada di atasnya
+      } else {
+        borderMaterialRef.current.color.setHex(0x2a2a2a); // Meredup warna gelap jika kartu lain sedang di-klik (fade)
+      }
     }
   });
 
@@ -107,7 +120,7 @@ function FloatingCard({
       <mesh position={[0, 0, -0.01]}>
         <planeGeometry args={[CARD_WIDTH + 0.06, CARD_HEIGHT + 0.06]} />
         <meshBasicMaterial
-          color={hovered ? "#4A7C59" : "#2a2a2a"}
+          ref={borderMaterialRef}
           transparent
           opacity={shouldFade ? 0.05 : hovered ? 0.7 : 0.25}
         />
