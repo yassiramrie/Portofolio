@@ -65,6 +65,15 @@ function FloatingCard({
 
   useFrame(({ camera }) => {
     groupRef.current?.lookAt(camera.position);
+  // Offset acak agar setiap kartu melayang dengan ritme yang berbeda
+  const randomOffset = useMemo(() => Math.random() * Math.PI * 2, []);
+
+  useFrame(({ camera, clock }) => {
+    if (groupRef.current) {
+      groupRef.current.lookAt(camera.position);
+      // Efek melayang naik turun (bobbing)
+      groupRef.current.position.y = position.y + Math.sin(clock.getElapsedTime() * 1.5 + randomOffset) * 0.4;
+    }
   });
 
   const handleClick = (e: ThreeEvent<MouseEvent>) => {
@@ -255,7 +264,7 @@ export default function StellarCardGallery() {
           enableZoom={false}
           enableRotate
           autoRotate
-          autoRotateSpeed={1.8}
+          autoRotateSpeed={3.5}
           minDistance={5}
           maxDistance={40}
           rotateSpeed={0.5}
