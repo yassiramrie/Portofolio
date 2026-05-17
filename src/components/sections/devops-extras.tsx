@@ -14,7 +14,7 @@ export function DevOpsExtras() {
       setText(fullText.slice(0, i));
       i++;
       if (i > fullText.length) clearInterval(timer);
-    }, 40);
+    }, 10);
     return () => clearInterval(timer);
   }, []);
 
