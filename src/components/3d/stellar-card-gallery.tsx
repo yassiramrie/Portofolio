@@ -167,8 +167,11 @@ function FloatingCard({
   );
 }
 
-function TexturePreloader() {
-  useTexture(PROJECTS.map((p) => p.imageUrl));
+function IntroAnim() {
+  useFrame((state) => {
+    // Menganimasikan kamera secara mulus dari posisi jauh (z=40) ke target (z=14)
+    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, 14, 0.03);
+  });
   return null;
 }
 
@@ -221,7 +224,7 @@ export default function StellarCardGallery() {
       }}
     >
       <Canvas
-        camera={{ position: [0, 0, 14], fov: 55 }}
+        camera={{ position: [0, 0, 40], fov: 55 }}
         style={{ width: "100%", height: "100%", display: "block" }}
         gl={{ antialias: true, powerPreference: "high-performance" }}
         dpr={[1, 2]}
@@ -233,25 +236,25 @@ export default function StellarCardGallery() {
           }
         }}
       >
+        <IntroAnim />
         <Suspense fallback={null}>
-          <TexturePreloader />
           <Environment preset="night" />
-          <ambientLight intensity={0.4} />
-          <pointLight position={[10, 10, 10]} intensity={0.6} />
-          <pointLight position={[-10, -10, -10]} intensity={0.3} />
-          <CardGalaxy />
-          <OrbitControls
-            enablePan={true}
-            enableZoom={true}
-            enableRotate
-            autoRotate
-            autoRotateSpeed={0.5}
-            minDistance={5}
-            maxDistance={30}
-            rotateSpeed={0.5}
-            target={[0, 0, 0]}
-          />
         </Suspense>
+        <ambientLight intensity={0.4} />
+        <pointLight position={[10, 10, 10]} intensity={0.6} />
+        <pointLight position={[-10, -10, -10]} intensity={0.3} />
+        <CardGalaxy />
+        <OrbitControls
+          enablePan={false}
+          enableZoom={false}
+          enableRotate
+          autoRotate
+          autoRotateSpeed={0.5}
+          minDistance={5}
+          maxDistance={40}
+          rotateSpeed={0.5}
+          target={[0, 0, 0]}
+        />
       </Canvas>
     </div>
   );
