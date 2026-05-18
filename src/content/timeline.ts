@@ -16,11 +16,6 @@ export const TIMELINE: TimelineEntry[] = [
     body: "Built a custom VPC with public/private subnets, NAT Gateway, and a bastion host. Networking stopped being a black box.",
   },
   {
-    date: "2024 · Q4",
-    title: "Cloud Practitioner certified",
-    body: "Passed the AWS Cloud Practitioner exam. Moved into Docker fundamentals and started building reproducible local environments.",
-  },
-  {
     date: "2025 · Q1",
     title: "Dockerized everything",
     body: "Multi-stage Dockerfiles, compose stacks, internal networks. Built the first multi-container app and made it reproducible from scratch.",
