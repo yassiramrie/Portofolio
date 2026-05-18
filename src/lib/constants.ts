@@ -4,7 +4,7 @@ export const SITE = {
   role: "Cloud / DevOps Engineer in Training",
   description:
     "A public learning log for the move into Cloud and DevOps: AWS foundations, containerized delivery, CI/CD habits, and monitoring that makes systems explain themselves.",
-  url: "https://example.com",
+  url: "https://yassir.ngenz.org",
   email: "yassiramrie97@gmail.com",
   social: {
     github: "https://github.com/yassir420",
