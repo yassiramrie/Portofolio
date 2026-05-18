@@ -16,7 +16,9 @@ export function HeroSection() {
       style={{ height: "100svh" }}
     >
       <StarfieldBackground />
-      <StellarCardGallery />
+      <div className="absolute inset-0 translate-x-8 md:translate-x-24 pointer-events-none [&>*]:pointer-events-auto">
+        <StellarCardGallery />
+      </div>
 
       {/*
         Mobile  : full-width panel anchored to bottom (text sits over lower portion)
