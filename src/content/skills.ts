@@ -17,6 +17,7 @@ import {
   Network,
   PlayCircle,
   Server,
+  Ship,
   Wrench,
   Zap,
 } from "lucide-react";
@@ -62,6 +63,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: "Docker", icon: Container, proficiency: "shipping" },
       { name: "Compose", icon: Layers, proficiency: "shipping" },
       { name: "ECR", icon: Archive, proficiency: "comfortable" },
+      { name: "Kubernetes", icon: Ship, proficiency: "exploring" },
     ],
   },
   {
