@@ -19,49 +19,40 @@ jobs:
           timeout: 60m
           command_timeout: 60m
           script: |
-            set -e
+            set -euo pipefail
 
-            # ── Install git if not present ────────────────────────
-            if ! command -v git &>/dev/null; then
+            if ! command -v git >/dev/null 2>&1; then
               sudo apt-get update -y
               sudo apt-get install -y git
             fi
-            
-            # ── Install Docker if not present ─────────────────────
-            if ! command -v docker &>/dev/null; then
+
+            if ! command -v docker >/dev/null 2>&1; then
               curl -fsSL https://get.docker.com -o get-docker.sh
               sudo sh get-docker.sh
             fi
 
-            # ── Pull latest code ──────────────────────────────────
+            sudo systemctl enable docker
+            sudo systemctl start docker
+
             REPO_DIR="$HOME/portfolio"
-            
-            # Menyisipkan token akses otomatis agar bisa clone/pull repo private
-            REPO_URL="https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/yassir420/Portofolio.git"
-            
+            REPO_URL="https://github.com/yassir420/Portofolio.git"
+
             if [ -d "$REPO_DIR/.git" ]; then
-              git -C "$REPO_DIR" pull $REPO_URL main 
+              git -C "$REPO_DIR" fetch origin
+              git -C "$REPO_DIR" checkout main
+              git -C "$REPO_DIR" pull --ff-only origin main
             else
-              git clone $REPO_URL "$REPO_DIR"
+              git clone "$REPO_URL" "$REPO_DIR"
             fi
 
-            # ── Free up disk space before build ───────────────────
-            sudo docker system prune -a -f --volumes || true
-            sudo docker builder prune -a -f || true
+            cd "$REPO_DIR"
 
-            # ── Build image on EC2 ────────────────────────────────
-            sudo docker build -t portfolio:latest "$REPO_DIR"
+            if [ -f .env.example ]; then
+              cp .env.example .env
+            fi
 
-            # ── Swap container ────────────────────────────────────
-            sudo docker stop portfolio 2>/dev/null || true
-            sudo docker rm   portfolio 2>/dev/null || true
-            sudo docker run -d \
-              --name portfolio \
-              --restart unless-stopped \
-              -p 80:3000 \
-              portfolio:latest
-
-            # ── Clean up old images ───────────────────────────────
+            sudo docker compose down --remove-orphans || true
+            sudo docker compose up -d --build --remove-orphans
             sudo docker image prune -f
 
             echo "[deploy] Done."
