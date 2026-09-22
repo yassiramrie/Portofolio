@@ -11,3 +11,4 @@ docker-compose*.yml
 *.env*
 .env
 .env.*
+public/*.png

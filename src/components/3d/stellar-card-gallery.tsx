@@ -8,11 +8,6 @@ import type { Project } from "@/types";
 import { PROJECTS } from "@/content/projects/projects";
 import { useCardContext } from "./card-context";
 
-// Preload semua gambar project sesegera mungkin agar tidak telat muncul di model 3D
-PROJECTS.forEach((project) => {
-  useTexture.preload(project.imageUrl);
-});
-
 type CardPosition = {
   x: number;
   y: number;
@@ -133,7 +128,7 @@ function FloatingCard({
 
       {/* Image mesh — suspends only itself while texture loads */}
       <Suspense fallback={null}>
-        <CardImageMesh url={project.imageUrl} opacity={fadeOpacity} />
+        <CardImageMesh url={project.thumbnailUrl} opacity={fadeOpacity} />
       </Suspense>
 
       {/* Title + category as DOM text */}

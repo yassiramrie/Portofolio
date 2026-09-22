@@ -7,7 +7,8 @@ export const PROJECTS: Project[] = [
     title: "VPC Architecture",
     description:
       "Custom AWS VPC with public and private subnets, NAT Gateway, route tables, and a bastion host for safe private-subnet access.",
-    imageUrl: "/vpc.png",
+    imageUrl: "/images/projects/vpc.webp",
+    thumbnailUrl: "/images/projects/thumbs/vpc.webp",
     tags: ["AWS", "VPC", "Networking", "Bastion"],
     category: "cloud",
     date: "2025-01-12",
@@ -23,7 +24,8 @@ export const PROJECTS: Project[] = [
     title: "Auto-Scaling Web App",
     description:
       "EC2 Auto Scaling Group fronted by an Application Load Balancer with health checks and rolling launch template updates.",
-    imageUrl: "/auto-scaling.png", // Sesuaikan dengan nama gambar Anda di folder public
+    imageUrl: "/images/projects/auto-scaling.webp",
+    thumbnailUrl: "/images/projects/thumbs/auto-scaling.webp",
     tags: ["AWS", "EC2", "ASG", "ALB"],
     category: "cloud",
     date: "2025-02-04",
@@ -39,7 +41,8 @@ export const PROJECTS: Project[] = [
     title: "S3 Static Site + CDN",
     description:
       "Static site hosted on S3, distributed through CloudFront with HTTPS, custom domain, and cache invalidation on deploy.",
-    imageUrl: "/s3.png", // Sesuaikan dengan nama gambar Anda di folder public
+    imageUrl: "/images/projects/s3.webp",
+    thumbnailUrl: "/images/projects/thumbs/s3.webp",
     tags: ["AWS", "S3", "CloudFront", "Route 53"],
     category: "cloud",
     date: "2025-02-18",
@@ -55,7 +58,8 @@ export const PROJECTS: Project[] = [
     title: "RDS Database Setup",
     description:
       "PostgreSQL on RDS with private-subnet placement, parameter groups, automated backups, and least-privilege application users.",
-    imageUrl: "/rds.png", // Sesuaikan dengan nama gambar Anda di folder public
+    imageUrl: "/images/projects/rds.webp",
+    thumbnailUrl: "/images/projects/thumbs/rds.webp",
     tags: ["AWS", "RDS", "PostgreSQL", "Backups"],
     category: "cloud",
     date: "2025-03-02",
@@ -71,7 +75,8 @@ export const PROJECTS: Project[] = [
     title: "Serverless API",
     description:
       "Lambda functions behind API Gateway with DynamoDB persistence and per-route IAM policies for least privilege.",
-    imageUrl: "/serverless.png", // Sesuaikan dengan nama gambar Anda di folder public
+    imageUrl: "/images/projects/serverless.webp",
+    thumbnailUrl: "/images/projects/thumbs/serverless.webp",
     tags: ["AWS", "Lambda", "API Gateway", "DynamoDB"],
     category: "cloud",
     date: "2025-03-19",
@@ -87,7 +92,8 @@ export const PROJECTS: Project[] = [
     title: "Dockerized Microservices",
     description:
       "Multi-container application orchestrated with docker-compose, including a reverse proxy and shared internal network.",
-    imageUrl: "/docker.png", // Sesuaikan dengan nama gambar Anda di folder public
+    imageUrl: "/images/projects/docker.webp",
+    thumbnailUrl: "/images/projects/thumbs/docker.webp",
     tags: ["Docker", "Compose", "NGINX", "Microservices"],
     category: "devops",
     date: "2025-04-07",
@@ -103,7 +109,8 @@ export const PROJECTS: Project[] = [
     title: "CI/CD Pipeline",
     description:
       "GitHub Actions workflow that lints, builds, pushes a Docker image, and deploys to EC2 over SSH on every main-branch commit.",
-    imageUrl: "/cicd.png", // Sesuaikan dengan nama gambar Anda di folder public
+    imageUrl: "/images/projects/cicd.webp",
+    thumbnailUrl: "/images/projects/thumbs/cicd.webp",
     tags: ["GitHub Actions", "Docker", "EC2", "SSH"],
     category: "ci-cd",
     date: "2025-04-22",
@@ -119,7 +126,8 @@ export const PROJECTS: Project[] = [
     title: "Monitoring Stack",
     description:
       "Prometheus scraping Node Exporter targets with Grafana dashboards for CPU, memory, disk, and network at a glance.",
-    imageUrl: "/monitoring.png", // Sesuaikan dengan nama gambar Anda di folder public
+    imageUrl: "/images/projects/monitoring.webp",
+    thumbnailUrl: "/images/projects/thumbs/monitoring.webp",
     tags: ["Prometheus", "Grafana", "Node Exporter", "Observability"],
     category: "monitoring",
     date: "2025-05-08",

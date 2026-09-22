@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Github } from "@/components/ui/brand-icons";
@@ -57,10 +58,12 @@ export default async function ProjectDetailPage({
         className="mt-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-muted"
         style={{ border: "1px solid rgba(74, 124, 89, 0.2)" }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={project.imageUrl}
           alt={project.title}
+          width={1280}
+          height={720}
+          priority
           className="h-full w-full object-cover"
         />
       </div>

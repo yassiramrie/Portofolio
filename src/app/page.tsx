@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Activity, ArrowRight, Cloud, Container, GitBranch } from "lucide-react";
 import { CardProvider } from "@/components/3d/card-context";
 import { CardModal } from "@/components/3d/card-modal";
@@ -107,10 +108,12 @@ export default function HomePage() {
                 style={{ border: "1px solid rgba(74, 124, 89, 0.2)" }}
               >
                 <div className="aspect-[16/10] w-full overflow-hidden bg-muted">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={project.imageUrl}
                     alt={project.title}
+                    width={960}
+                    height={600}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                 </div>
