@@ -26,7 +26,10 @@ export function StarfieldBackground({
     mount.appendChild(renderer.domElement);
 
     const starsGeometry = new THREE.BufferGeometry();
-    const starsCount = 10000;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const starsCount = prefersReducedMotion ? 2500 : 10000;
     const positions = new Float32Array(starsCount * 3);
     for (let i = 0; i < starsCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 2000;
@@ -44,7 +47,7 @@ export function StarfieldBackground({
     camera.position.z = 10;
 
     // Jejak bintang (Stardust trail) yang mengikuti kursor
-    const trailCount = 40;
+    const trailCount = prefersReducedMotion ? 0 : 40;
     const trailGeometry = new THREE.BufferGeometry();
     const trailPositions = new Float32Array(trailCount * 3);
     for (let i = 0; i < trailCount * 3; i++) trailPositions[i] = 10000; // Sembunyikan jauh saat pertama dirender
@@ -74,7 +77,9 @@ export function StarfieldBackground({
       const distance = -camera.position.z / vec.z;
       mouse3D.copy(camera.position).add(vec.multiplyScalar(distance));
     };
-    window.addEventListener("mousemove", onMouseMove);
+    if (!prefersReducedMotion) {
+      window.addEventListener("mousemove", onMouseMove);
+    }
 
     let animationId = 0;
     const animate = () => {
@@ -92,9 +97,11 @@ export function StarfieldBackground({
         positions[i * 3 + 1] = positions[(i - 1) * 3 + 1];
         positions[i * 3 + 2] = positions[(i - 1) * 3 + 2];
       }
-      positions[0] = mouse3D.x;
-      positions[1] = mouse3D.y;
-      positions[2] = mouse3D.z;
+      if (trailCount > 0) {
+        positions[0] = mouse3D.x;
+        positions[1] = mouse3D.y;
+        positions[2] = mouse3D.z;
+      }
       trailGeometry.attributes.position.needsUpdate = true;
 
       renderer.render(scene, camera);

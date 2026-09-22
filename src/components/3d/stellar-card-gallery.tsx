@@ -239,6 +239,10 @@ function CardGalaxy() {
 }
 
 export default function StellarCardGallery() {
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   return (
     <div
       style={{
@@ -255,7 +259,7 @@ export default function StellarCardGallery() {
         camera={{ position: [0, 0, 40], fov: 55 }}
         style={{ width: "100%", height: "100%", display: "block", touchAction: "pan-y" }}
         gl={{ antialias: true, powerPreference: "high-performance" }}
-        dpr={[1, 2]}
+        dpr={prefersReducedMotion ? 1 : [1, 1.5]}
         onCreated={({ gl }) => {
           gl.domElement.style.setProperty("touch-action", "pan-y", "important");
           gl.domElement.style.pointerEvents = "auto";
@@ -276,7 +280,7 @@ export default function StellarCardGallery() {
           enablePan={false}
           enableZoom={false}
           enableRotate
-          autoRotate
+          autoRotate={!prefersReducedMotion}
           autoRotateSpeed={3.5}
           minDistance={5}
           maxDistance={40}

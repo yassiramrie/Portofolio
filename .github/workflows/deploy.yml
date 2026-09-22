@@ -6,7 +6,30 @@ on:
   workflow_dispatch:
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build application
+        run: npm run build
+
   deploy:
+    needs: validate
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +46,10 @@ jobs:
 
             if ! command -v git >/dev/null 2>&1; then
               sudo apt-get update -y
-              sudo apt-get install -y git
+              sudo apt-get install -y git curl
+            elif ! command -v curl >/dev/null 2>&1; then
+              sudo apt-get update -y
+              sudo apt-get install -y curl
             fi
 
             if ! command -v docker >/dev/null 2>&1; then
@@ -35,7 +61,7 @@ jobs:
             sudo systemctl start docker
 
             REPO_DIR="$HOME/portfolio"
-            REPO_URL="https://github.com/yassir420/Portofolio.git"
+            REPO_URL="https://github.com/yassiramrie/Portofolio.git"
 
             if [ -d "$REPO_DIR/.git" ]; then
               git -C "$REPO_DIR" fetch origin
@@ -47,9 +73,15 @@ jobs:
 
             cd "$REPO_DIR"
 
-            if [ -f .env.example ]; then
+            if [ ! -f .env ] && [ -f .env.example ]; then
               cp .env.example .env
             fi
+
+            PUBLIC_IP="$(curl -fsS https://checkip.amazonaws.com | tr -d '[:space:]')"
+            touch .env
+            grep -v '^NEXT_PUBLIC_SITE_URL=' .env > .env.tmp || true
+            printf 'NEXT_PUBLIC_SITE_URL=http://%s\n' "$PUBLIC_IP" >> .env.tmp
+            mv .env.tmp .env
 
             sudo docker compose down --remove-orphans || true
             sudo docker compose up -d --build --remove-orphans

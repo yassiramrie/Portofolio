@@ -1,13 +1,12 @@
 export const SITE = {
-  // TODO: replace with real values before deploying
   name: "yassir.dev",
   role: "Cloud / DevOps Engineer in Training",
   description:
     "A public learning log for the move into Cloud and DevOps: AWS foundations, containerized delivery, CI/CD habits, and monitoring that makes systems explain themselves.",
-  url: "https://yassir.ngenz.org",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   email: "yassiramrie97@gmail.com",
   social: {
-    github: "https://github.com/yassir420",
+    github: "https://github.com/yassiramrie",
     linkedin: "https://www.linkedin.com/in/yassir-amrie-nasrullah/",
     whatsapp: "https://wa.me/6281779487387", // Ganti dengan nomor WhatsApp Anda
   },

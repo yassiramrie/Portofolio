@@ -50,13 +50,12 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         
-        {/* EC2 Node Status Indicator */}
         <div className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-[#080808]/80 px-3 py-1.5 text-[10px] font-mono text-white/70 backdrop-blur-md border border-white/10 shadow-lg sm:bottom-6 sm:right-6 sm:text-xs">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          EC2 Node: Online
+          Portfolio online
         </div>
       </body>
     </html>

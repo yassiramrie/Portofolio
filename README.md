@@ -28,7 +28,7 @@ Website portfolio untuk perjalanan belajar Cloud & DevOps. Dibangun dengan Next.
 
 ```bash
 # 1. Clone repository ini
-git clone https://github.com/yassir420/Portofolio.git
+git clone https://github.com/yassiramrie/Portofolio.git
 cd Portofolio
 
 # 2. Install semua dependency
@@ -172,6 +172,10 @@ Buka repository → **Settings → Secrets and variables → Actions → New rep
 |---|---|
 | `EC2_HOST` | IP publik EC2 kamu (contoh: `13.229.x.x`) |
 | `EC2_SSH_KEY` | Isi lengkap file `.pem` (private key SSH) |
+
+Untuk sementara gunakan IP publik EC2 melalui HTTP. Sebelum deploy pertama,
+ubah `NEXT_PUBLIC_SITE_URL` di file `.env` pada EC2 menjadi
+`http://108.137.146.44`. Jangan gunakan `https://` sebelum TLS/domain dikonfigurasi.
 
 Cara copy isi file `.pem`:
 ```bash
