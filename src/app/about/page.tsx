@@ -24,7 +24,7 @@ export default function AboutPage() {
         </h2>
         <p className="mt-4 text-base leading-7 text-muted-foreground">
           Learn AWS by deploying real services into it. Containerize everything
-          so it's reproducible. Wire up CI/CD so deploys are one commit away.
+          so it&apos;s reproducible. Wire up CI/CD so deploys are one commit away.
           Make systems explain themselves with Prometheus and Grafana. Move
           toward infrastructure-as-code once the foundations are visible. Share
           every step in public so the journey is the proof.
@@ -44,12 +44,12 @@ export default function AboutPage() {
 
       <section className="mt-20 rounded-xl border border-white/10 bg-card p-6 sm:p-8">
         <h2 className="text-balance text-xl font-semibold tracking-tight">
-          What's next
+          What&apos;s next
         </h2>
         <ul className="mt-4 space-y-2 text-sm leading-6 text-muted-foreground">
           <li className="flex gap-2">
             <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary-light" />
-            Turn each AWS service I've used into a small public build note.
+            Turn each AWS service I&apos;ve used into a small public build note.
           </li>
           <li className="flex gap-2">
             <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary-light" />

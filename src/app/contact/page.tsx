@@ -16,7 +16,7 @@ export default function ContactPage() {
         Contact
       </p>
       <h1 className="mt-3 text-balance text-4xl font-semibold tracking-tight">
-        Let's talk cloud.
+        Let&apos;s talk cloud.
       </h1>
       <p className="mt-6 text-base leading-7 text-muted-foreground">
         Placeholder — a contact form arrives in Phase 8. In the meantime, these

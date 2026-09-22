@@ -34,11 +34,6 @@ function CardImageMesh({
   opacity: number;
 }) {
   const texture = useTexture(url);
-  texture.minFilter = THREE.LinearMipmapLinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  texture.anisotropy = 16;
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.needsUpdate = true;
 
   return (
     <mesh position={[0, IMAGE_Y, 0.02]}>
@@ -65,7 +60,7 @@ function FloatingCard({
   const borderMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
 
   // Offset acak agar setiap kartu melayang dengan ritme yang berbeda
-  const randomOffset = useMemo(() => Math.random() * Math.PI * 2, []);
+  const [randomOffset] = useState(() => Math.random() * Math.PI * 2);
 
   useFrame(({ camera, clock }) => {
     if (groupRef.current) {

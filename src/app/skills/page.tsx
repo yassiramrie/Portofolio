@@ -13,7 +13,7 @@ export default function SkillsPage() {
         Skills
       </p>
       <h1 className="mt-3 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-        Tools, services, and how far I've taken each one.
+        Tools, services, and how far I&apos;ve taken each one.
       </h1>
       <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
         Grouped by what each tool does, not by how impressive the logo looks.
